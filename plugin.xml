@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.gizscanqrcode" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>gizscanqrcode</name>
+    <js-module name="gizscanqrcode" src="www/gizscanqrcode.js">
+        <clobbers target="cordova.plugins.gizscanqrcode" />
+    </js-module>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="gizscanqrcode">
+                <param name="android-package" value="com.gizscanqrcode.gizscanqrcode" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml" />
+        <source-file src="src/android/gizscanqrcode.java" target-dir="src/com/getdevicename/GetDeviceInfo" />
+    </platform>
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="gizscanqrcode">
+                <param name="ios-package" value="gizscanqrcode" />
+            </feature>
+        </config-file>
+        <source-file src="src/ios/gizscanqrcode.h" />
+        <source-file src="src/ios/gizscanqrcode.m" />
+        <source-file src="src/ios/ScanQrcodeVC.h" />
+        <source-file src="src/ios/ScanQrcodeVC.m" />
+        <source-file src="src/ios/ScanQrcodeVC.xib" />
+        <source-file src="src/ios/GizScanQrcodeView.h" />
+        <source-file src="src/ios/GizScanQrcodeView.m" />
+        <source-file src="src/ios/images/bar_back.png" />
+        <source-file src="src/ios/images/scan_window.png" />
+        <source-file src="src/ios/images/scanLine.png" />
+    </platform>
+</plugin>

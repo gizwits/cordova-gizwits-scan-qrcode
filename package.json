@@ -1,0 +1,37 @@
+{
+  "name": "gizscanqrcode",
+  "version": "1.0.0",
+  "description": "gizscanqrcode Cordova Plugin",
+  "cordova": {
+    "id": "com.gizscanqrcode",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "keywords": [
+    "cordova",
+    "gizscanqrcode"
+  ],
+  "scripts": {
+    "precommit": "npm run gen-docs && git add README.md",
+    "gen-docs": "jsdoc2md --template \"jsdoc2md/TEMPLATE.md\" \"www/**/*.js\" --plugin \"dmd-plugin-cordova-plugin\" > README.md",
+    "test": "npm run jshint",
+    "jshint": "node node_modules/jshint/bin/jshint www && node node_modules/jshint/bin/jshint src && node node_modules/jshint/bin/jshint tests"
+  },
+  "author": "Gizwits Inc.",
+  "license": "GPL",
+  "engines": {
+    "cordovaDependencies": {
+      "3.0.0": {
+        "cordova": ">100"
+      }
+    }
+  },
+  "devDependencies": {
+    "dmd-plugin-cordova-plugin": "^0.1.0",
+    "husky": "^0.10.1",
+    "jsdoc-to-markdown": "^1.2.0",
+    "jshint": "^2.6.0"
+  }
+}
