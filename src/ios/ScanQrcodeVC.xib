@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScanQrcodeVC">
             <connections>
                 <outlet property="descriptionLabel" destination="lsf-O3-KmJ" id="Im6-Mf-2eD"/>
+                <outlet property="scanImageView" destination="2TH-Vh-DZj" id="2rK-hB-zen"/>
                 <outlet property="scanView" destination="Xzl-K3-Xen" id="UGQ-7i-Kck"/>
                 <outlet property="titleLabel" destination="Tcr-js-iQh" id="sLz-Zb-Cid"/>
                 <outlet property="topBarView" destination="Xe1-U0-5IH" id="8kj-Kl-abw"/>

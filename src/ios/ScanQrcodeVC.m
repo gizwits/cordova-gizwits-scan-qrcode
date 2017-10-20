@@ -14,6 +14,7 @@
 @interface ScanQrcodeVC ()<GizScanQrcodeViewDelegate>
 
 @property (weak, nonatomic) IBOutlet GizScanQrcodeView *scanView;
+@property (weak, nonatomic) IBOutlet UIImageView *scanImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIView *topBarView;
@@ -62,6 +63,15 @@
         NSString *descriptionString = [self.scanQrcodeAttr objectForKey:@"describe"];
         if (descriptionString) {
             self.descriptionLabel.text = descriptionString;
+        }
+        
+        NSString *borderColor = [self.scanQrcodeAttr objectForKey:@"borderColor"];
+        if (borderColor && borderColor.length == 6) {
+            UIColor *uiBorderColor = [self colorWithHexString:borderColor alpha:1];
+            self.scanImageView.tintColor = uiBorderColor;
+            self.scanImageView.image = [self.scanImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            
+            [self.scanView setScanLineColor:uiBorderColor];
         }
     }
 }

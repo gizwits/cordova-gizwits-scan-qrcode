@@ -22,6 +22,7 @@
         id firstObj = command.arguments.firstObject;
         if ([firstObj isKindOfClass:[NSDictionary class]]) {
             NSDictionary *attrs = (NSDictionary *)firstObj;
+            NSLog(@"\n--------------------- 参数 ---------------------\n%@", attrs);
             if (attrs.count) {
                 scanVC.scanQrcodeAttr = command.arguments.firstObject;
             }

@@ -154,6 +154,11 @@
     }
 }
 
+- (void)setScanLineColor:(UIColor *)scanLineColor{
+    self.scanLine.tintColor = scanLineColor;
+    self.scanLine.image = [self.scanLine.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+}
+
 - (void)doAnimateFrame{
     if (![self.scanLine.layer.animationKeys containsObject:@"AnimateFrame"]) {
         CABasicAnimation* theAnim;
