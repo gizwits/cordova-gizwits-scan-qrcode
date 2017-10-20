@@ -3,8 +3,8 @@
 > 二维码扫描插件
 
 ## 支持平台
-> iOS
-> android
+* iOS
+* android
 
 ## 使用说明
 
@@ -17,7 +17,6 @@ cordova plugin add <gizscanqrcode本地目录>
 ```
 
 > 2.插件使用
-
 ```
 cordova.plugins.gizscanqrcode.scan(
     {
