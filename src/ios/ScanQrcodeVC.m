@@ -56,7 +56,7 @@
         }
         
         NSString *barColor = [self.scanQrcodeAttr objectForKey:@"color"];
-        if (barColor && barColor.length == 6) {
+        if (barColor) {
             self.topBarView.backgroundColor = [self colorWithHexString:barColor alpha:1];
         }
         
@@ -66,7 +66,7 @@
         }
         
         NSString *borderColor = [self.scanQrcodeAttr objectForKey:@"borderColor"];
-        if (borderColor && borderColor.length == 6) {
+        if (borderColor) {
             UIColor *uiBorderColor = [self colorWithHexString:borderColor alpha:1];
             self.scanImageView.tintColor = uiBorderColor;
             self.scanImageView.image = [self.scanImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
