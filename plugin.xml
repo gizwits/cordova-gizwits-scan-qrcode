@@ -12,8 +12,10 @@
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml" />
         <source-file src="src/android/gizscanqrcode.java" target-dir="src/com/gizscanqrcode" />
+		<source-file src="src/android/PermissionHelper.java"  target-dir="src/com/gizscanqrcode" />
 		<framework src="src/android/gizscanqrcode.gradle" custom="true" type="gradleReference"/>
-		 <resource-file src="src/android/gizscanqrcode-release.aar" target="libs/gizscanqrcode.aar"/>
+		<resource-file src="src/android/gizscanqrcode-release.aar" target="libs/gizscanqrcode.aar"/>
+		
     </platform>
     <platform name="ios">
         <config-file parent="/*" target="config.xml">
