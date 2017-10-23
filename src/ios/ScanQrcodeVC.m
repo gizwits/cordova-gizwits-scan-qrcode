@@ -42,6 +42,16 @@
     [self.scanView stopScan];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    if (self.scanQrcodeAttr) {
+        NSString *whiteStatusBar = [self.scanQrcodeAttr objectForKey:@"statusBarColor"];
+        if (whiteStatusBar && [[whiteStatusBar uppercaseString] isEqualToString:@"WHITE"]) {
+            return UIStatusBarStyleLightContent;
+        }
+    }
+    return UIStatusBarStyleDefault;
+}
+
 #pragma mark -setup
 - (void)configScanQRCodeView{
     self.scanView.delegate = self;
