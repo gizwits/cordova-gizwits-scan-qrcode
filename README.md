@@ -21,9 +21,9 @@ cordova plugin add <gizscanqrcode本地目录>
 cordova.plugins.gizscanqrcode.scan(
     {
         "title": "我是标题",     //(标题文字)
-        "color": "4e8dec",      //(导航栏颜色)
+        "color": "#4e8dec",      //(导航栏颜色)
         "describe": "我是提示语",//(提示用户文字)
-        "borderColor": "4e8dec" //(扫描框颜色)
+        "borderColor": "#4e8dec" //(扫描框颜色)
     },
     function (result) {
         console.log(result);//二维码数据
