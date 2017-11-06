@@ -13,10 +13,13 @@
 
 > 1.添加插件
 ```
-// cordova目录
+// 1.cordova目录
 cd <your cordova directory>
-// 添加 gizscanqrcode插件
+// 2.添加 gizscanqrcode插件
 cordova plugin add gizscanqrcode
+// 
+// 添加 gizscanqrcode插件(指定版本)
+cordova plugin add gizscanqrcode@版本号
 // 删除 gizscanqrcode插件
 cordova plugin rm com.gizscanqrcode
 ```
