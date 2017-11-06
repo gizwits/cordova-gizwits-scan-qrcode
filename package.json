@@ -1,6 +1,6 @@
 {
   "name": "gizscanqrcode",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "gizscanqrcode Cordova Plugin",
   "cordova": {
     "id": "com.gizscanqrcode",
@@ -10,8 +10,12 @@
     ]
   },
   "keywords": [
-    "cordova",
-    "gizscanqrcode"
+    "gizscanqrcode",
+    "qrcode",
+    "scan qrcode",
+    "scan code",
+    "scan",
+    "cordova"
   ],
   "scripts": {
     "precommit": "npm run gen-docs && git add README.md",
