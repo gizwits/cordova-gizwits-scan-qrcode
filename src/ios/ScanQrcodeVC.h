@@ -1,12 +1,11 @@
-//
-//  ScanQrcodeVC.h
-//  iostest
-//
-//  Created by Pp on 2017/10/19.
-//
-//
-
 #import <UIKit/UIKit.h>
+
+typedef NS_ENUM(NSInteger, GizscanqrcodeResult) {
+    GizscanqrcodeResultUnknown,
+    GizscanqrcodeResultSuccess,
+    GizscanqrcodeResultError,
+    GizscanqrcodeResultCancel,
+};
 
 @interface ScanQrcodeVC : UIViewController
 
@@ -25,6 +24,6 @@
 /**
  * scan code result block
  */
-@property (nonatomic, copy) void(^scancodeCallback)(BOOL result, NSString *text);
+@property (nonatomic, copy) void(^scancodeCallback)(GizscanqrcodeResult resultCode, NSString *result);
 
 @end

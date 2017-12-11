@@ -1,11 +1,3 @@
-//
-//  ScanQrcodeVC.m
-//  iostest
-//
-//  Created by Pp on 2017/10/19.
-//
-//
-
 #import "ScanQrcodeVC.h"
 #import "GizScanQrcodeView.h"
 
@@ -88,23 +80,31 @@
 
 #pragma mark -action
 - (IBAction)backAcction:(id)sender {
+    NSLog(@"【gizscanqrcode】scan cancel");
+    if (self.scancodeCallback) {
+        self.scancodeCallback(GizscanqrcodeResultCancel, @"cancel");
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
 #pragma mark - GizScanQrcodeViewDelegate
 - (void)scanSuccess:(NSString *)text{
-    NSLog(@"扫码结果: %@", text);
+    NSLog(@"【gizscanqrcode】scan result: %@", text);
     if (self.scancodeCallback) {
-        self.scancodeCallback(YES, text);
+        self.scancodeCallback(GizscanqrcodeResultSuccess, text);
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)scanError:(NSError *)error{
-    NSLog(@"扫码失败: %@", error);
+    NSLog(@"【gizscanqrcode】scan error: %@", error);
     if (self.scancodeCallback) {
-        self.scancodeCallback(NO, @"扫码失败");
+        NSString *errorString = @"scan error";
+        if ([error localizedDescription] && [error localizedDescription].length) {
+            errorString = [error localizedDescription];
+        }
+        self.scancodeCallback(GizscanqrcodeResultError, errorString);
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }

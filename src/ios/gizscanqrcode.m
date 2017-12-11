@@ -14,15 +14,15 @@
     
     ScanQrcodeVC *scanVC = [[ScanQrcodeVC alloc] initWithNibName:@"ScanQrcodeVC" bundle:[NSBundle mainBundle]];
     // config scan code viewcontroller
-    scanVC.scancodeCallback = ^(BOOL result, NSString *text){
-        [self configScanqrcodeCallbackWithResult:result text:text];
+    scanVC.scancodeCallback = ^(GizscanqrcodeResult resultCode, NSString *result){
+        [self configScanqrcodeCallbackWithCode:resultCode result:result];
     };
     
     if (command.arguments && command.arguments.firstObject) {
         id firstObj = command.arguments.firstObject;
         if ([firstObj isKindOfClass:[NSDictionary class]]) {
             NSDictionary *attrs = (NSDictionary *)firstObj;
-            NSLog(@"\n--------------------- 参数 ---------------------\n%@", attrs);
+            NSLog(@"\n--------------------- 【gizscanqrcode parameters】 ---------------------\n%@", attrs);
             if (attrs.count) {
                 scanVC.scanQrcodeAttr = command.arguments.firstObject;
             }
@@ -32,11 +32,12 @@
     [self.viewController presentViewController:scanVC animated:YES completion:nil];
 }
 
-- (void)configScanqrcodeCallbackWithResult:(BOOL)result text:(NSString *)text{
-    if (result) {
-        [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:text] callbackId:self.command.callbackId];
+- (void)configScanqrcodeCallbackWithCode:(GizscanqrcodeResult)resultCode result:(NSString *)result{
+    NSString *resultString = [NSString stringWithFormat:@"{resultCode: %@,result: %@}", @(resultCode), result];
+    if (resultCode == GizscanqrcodeResultSuccess) {
+        [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:resultString] callbackId:self.command.callbackId];
     } else{
-        [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:nil] callbackId:self.command.callbackId];
+        [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:resultString] callbackId:self.command.callbackId];
     }
     
 }
