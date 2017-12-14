@@ -1,15 +1,20 @@
 #import "ScanQrcodeVC.h"
 #import "GizScanQrcodeView.h"
+#import "GizScanQrcodeAttr.h"
 
-#define myColor(R, G, B, A) [UIColor colorWithRed:R/255.0 green:G/255.0 blue:B/255.0 alpha:A]
-
-@interface ScanQrcodeVC ()<GizScanQrcodeViewDelegate>
+@interface ScanQrcodeVC ()<GizScanQrcodeViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet GizScanQrcodeView *scanView;
 @property (weak, nonatomic) IBOutlet UIImageView *scanImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIView *topBarView;
+@property (weak, nonatomic) IBOutlet UIButton *choosePhotoBtn;
+//loading animation
+@property (weak, nonatomic) IBOutlet UIView *activityIndicatorBackView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingView;
+
+@property (nonatomic, strong) UIImagePickerController *imagePicker;
 
 @end
 
@@ -51,34 +56,55 @@
 }
 
 - (void)setSubviews{
-    if (self.scanQrcodeAttr) {
-        NSString *titleString = [self.scanQrcodeAttr objectForKey:@"title"];
-        if (titleString) {
-            self.titleLabel.text = titleString;
+    [self setLoadingAnimation:false];
+    
+    GizScanQrcodeAttr *attr = [[GizScanQrcodeAttr alloc] initWithDict:self.scanQrcodeAttr];
+    self.titleLabel.text = attr.title;
+    self.topBarView.backgroundColor = attr.barColor;
+    //describe string
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:attr.describe];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineSpacing:attr.describeLineSpacing];
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, attr.describe.length)];
+    [self.descriptionLabel setAttributedText:attributedString];
+    self.descriptionLabel.textAlignment = NSTextAlignmentCenter;
+    self.descriptionLabel.font = [UIFont systemFontOfSize:attr.describeFontSize];
+    self.descriptionLabel.textColor = attr.describeColor;
+    //border
+    self.scanImageView.tintColor = attr.borderColor;
+    self.scanImageView.image = [self.scanImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.scanView setScanLineColor:attr.borderColor];
+    for (NSLayoutConstraint *subCons in self.scanView.constraints) {
+        if ([subCons.identifier isEqualToString:@"borderScaleConstraint"]) {
+            [self.scanView removeConstraint:subCons];
+            NSLayoutConstraint *newCons = [NSLayoutConstraint constraintWithItem:self.scanView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.scanImageView attribute:NSLayoutAttributeWidth multiplier:1.0 / attr.borderScale constant:0];
+            newCons.identifier = @"borderScaleConstraint";
+            [self.scanView addConstraint:newCons];
+            [self.scanView layoutIfNeeded];
+            break;
         }
-        
-        NSString *barColor = [self.scanQrcodeAttr objectForKey:@"color"];
-        if (barColor) {
-            self.topBarView.backgroundColor = [self colorWithHexString:barColor alpha:1];
-        }
-        
-        NSString *descriptionString = [self.scanQrcodeAttr objectForKey:@"describe"];
-        if (descriptionString) {
-            self.descriptionLabel.text = descriptionString;
-        }
-        
-        NSString *borderColor = [self.scanQrcodeAttr objectForKey:@"borderColor"];
-        if (borderColor) {
-            UIColor *uiBorderColor = [self colorWithHexString:borderColor alpha:1];
-            self.scanImageView.tintColor = uiBorderColor;
-            self.scanImageView.image = [self.scanImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            
-            [self.scanView setScanLineColor:uiBorderColor];
+    }
+    //choosePhotoBtn
+    [self.choosePhotoBtn setHidden:!attr.choosePhotoEnable];
+    self.choosePhotoBtn.backgroundColor = attr.choosePhotoBtnColor;
+    [self.choosePhotoBtn setTitle:attr.choosePhotoBtnTitle forState:UIControlStateNormal];
+}
+
+#pragma mark - loading animation
+- (void)setLoadingAnimation:(BOOL)loading{
+    [self.activityIndicatorBackView setHidden:!loading];
+    if (loading) {
+        [self.loadingView startAnimating];
+        [self.scanView stopScan];
+    } else{
+        [self.loadingView stopAnimating];
+        if (![self.scanView isScan]) {
+            [self.scanView startScan];
         }
     }
 }
 
-#pragma mark -action
+#pragma mark - action
 - (IBAction)backAcction:(id)sender {
     NSLog(@"【gizscanqrcode】scan cancel");
     if (self.scancodeCallback) {
@@ -87,6 +113,53 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)choosePhotoAction:(id)sender {
+    //调用相册
+    self.imagePicker = [[UIImagePickerController alloc]init];
+    self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    self.imagePicker.delegate = self;
+    [self presentViewController:self.imagePicker animated:YES completion:nil];
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+-(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+        [self parseImagePickerInfo:info];
+    }];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+        [self setLoadingAnimation:false];
+    }];
+}
+
+//parse photo
+- (void)parseImagePickerInfo:(NSDictionary *)info{
+    [self setLoadingAnimation:true];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *imageInfo = @"" ;
+        UIImage *pickImage = info[UIImagePickerControllerOriginalImage];
+        NSData *imageData = UIImagePNGRepresentation(pickImage);
+        CIImage *ciImage = [CIImage imageWithData:imageData];
+        CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:@{CIDetectorAccuracy: CIDetectorAccuracyLow}];
+        NSArray *feature = [detector featuresInImage:ciImage];
+        
+        for (CIQRCodeFeature *result in feature) {
+            imageInfo = result.messageString;
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self setLoadingAnimation:false];
+            if (imageInfo && imageInfo.length) {
+                [self scanSuccess:imageInfo];
+            } else{
+                [self scanError:[NSError errorWithDomain:@"ImagePickerDomain" code:999 userInfo:@{NSLocalizedDescriptionKey: @"ImagePickerError"}]];
+            }
+        });
+    });
+}
 
 #pragma mark - GizScanQrcodeViewDelegate
 - (void)scanSuccess:(NSString *)text{
@@ -107,33 +180,6 @@
         self.scancodeCallback(GizscanqrcodeResultError, errorString);
     }
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark -others
-- (UIColor *)colorWithHexString:(NSString *)hexString alpha:(CGFloat)alphaValue {
-    NSString *cString = [[hexString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
-    if (cString.length < 6)
-        return [UIColor clearColor];
-    if ([cString hasPrefix:@"0X"])
-        cString = [cString substringFromIndex:2];
-    if ([cString hasPrefix:@"#"])
-        cString = [cString substringFromIndex:1];
-    if (cString.length != 6)
-        return [UIColor clearColor];
-    NSRange range;
-    range.location = 0;
-    range.length = 2;
-    NSString *rString = [cString substringWithRange:range];
-    range.location = 2;
-    NSString *gString = [cString substringWithRange:range];
-    range.location = 4;
-    NSString *bString = [cString substringWithRange:range];
-    unsigned int r, g, b;
-    [[NSScanner scannerWithString:rString] scanHexInt:&r];
-    [[NSScanner scannerWithString:gString] scanHexInt:&g];
-    [[NSScanner scannerWithString:bString] scanHexInt:&b];
-    
-    return myColor(r, g, b, alphaValue);
 }
 
 - (void)didReceiveMemoryWarning {

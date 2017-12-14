@@ -1,6 +1,6 @@
 {
   "name": "gizscanqrcode",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "gizscanqrcode Cordova Plugin",
   "cordova": {
     "id": "com.gizscanqrcode",

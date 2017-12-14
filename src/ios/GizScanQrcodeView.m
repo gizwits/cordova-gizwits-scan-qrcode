@@ -129,8 +129,8 @@
 
 - (void)stopScan {
     [self.session stopRunning];
-    [self updateScanLine];
     self.isScan = NO;
+    [self updateScanLine];
 }
 
 - (void)updateScanLine {
