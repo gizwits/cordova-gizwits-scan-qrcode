@@ -7,7 +7,8 @@
 * android
 
 ## 效果预览 （iOS & android）
-<img src="https://raw.githubusercontent.com/wiki/gizwits/cordova-gizwits-scan-qrcode/iOS1.jpg" width=180/> <img src="https://raw.githubusercontent.com/wiki/gizwits/cordova-gizwits-scan-qrcode/android1.png" width=180/>
+<img src="https://raw.githubusercontent.com/wiki/gizwits/cordova-gizwits-scan-qrcode/iOS_1.2.0_1.jpg" width=180/> <img src="https://raw.githubusercontent.com/wiki/gizwits/cordova-gizwits-scan-qrcode/iOS_1.2.0_2.jpg" width=180/> 
+<img src="https://raw.githubusercontent.com/wiki/gizwits/cordova-gizwits-scan-qrcode/android1.png" width=180/>
 
 ## 使用说明
 
