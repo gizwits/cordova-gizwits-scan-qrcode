@@ -27,13 +27,13 @@ public class gizscanqrcode extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("scan")) {
-			if(!hasPermisssion()) {
-              requestPermissions(0);
-            } else {
-                this.requestArgs = args;
+			//if(!hasPermisssion()) {
+            //  requestPermissions(0);
+            //} else {
+              this.requestArgs = args;
 			  this.callbackContext = callbackContext;
               this.scan(args);
-            }
+           // }
             return true;
         }
         return false;
@@ -153,7 +153,9 @@ public class gizscanqrcode extends CordovaPlugin {
            if (r == PackageManager.PERMISSION_DENIED) {
                Log.d("gizscanqrcode", "Permission Denied!");
                result = new PluginResult(PluginResult.Status.ILLEGAL_ACCESS_EXCEPTION);
-               this.callbackContext.sendPluginResult(result);
+                if(this.callbackContext != null) {
+                   this.callbackContext.sendPluginResult(result);
+               }
                return;
            }
        }
