@@ -1,6 +1,6 @@
 {
   "name": "gizscanqrcode",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "gizscanqrcode Cordova Plugin",
   "cordova": {
     "id": "com.gizscanqrcode",
@@ -10,8 +10,18 @@
     ]
   },
   "keywords": [
-    "cordova",
-    "gizscanqrcode"
+    "gizwits",
+    "gizwits plugin",
+    "gizscanqrcode",
+    "giz scan qrcode",
+    "qrcode",
+    "scan qrcode",
+    "scan code",
+    "scan",
+    "cordova gizwits",
+    "cordova scan qrcode",
+    "cordova qrcode",
+    "cordova code"
   ],
   "scripts": {
     "precommit": "npm run gen-docs && git add README.md",
@@ -20,7 +30,7 @@
     "jshint": "node node_modules/jshint/bin/jshint www && node node_modules/jshint/bin/jshint src && node node_modules/jshint/bin/jshint tests"
   },
   "author": "Gizwits Inc.",
-  "license": "GPL",
+  "license": "GPL-3.0",
   "engines": {
     "cordovaDependencies": {
       "3.0.0": {
@@ -33,5 +43,14 @@
     "husky": "^0.10.1",
     "jsdoc-to-markdown": "^1.2.0",
     "jshint": "^2.6.0"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/gizwits/cordova-gizwits-scan-qrcode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gizwits/cordova-gizwits-scan-qrcode/issues"
+  },
+  "homepage": "https://github.com/gizwits/cordova-gizwits-scan-qrcode#readme"
 }
