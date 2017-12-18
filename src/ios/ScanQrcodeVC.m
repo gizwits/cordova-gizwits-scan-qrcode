@@ -30,7 +30,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     if (![self.scanView isScan]) {
-        if (!self.loading.animated) {
+        if (!self.loadingView.isAnimating) {
             [self.scanView startScan];
         }
     }
@@ -116,6 +116,7 @@
 }
 
 - (IBAction)choosePhotoAction:(id)sender {
+    [self setLoadingAnimation:true];
     //调用相册
     self.imagePicker = [[UIImagePickerController alloc]init];
     self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
@@ -126,7 +127,6 @@
 #pragma mark - UIImagePickerControllerDelegate
 -(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
-        [self setLoadingAnimation:true];
         [self parseImagePickerInfo:info];
     }];
 }
@@ -142,8 +142,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *imageInfo = @"" ;
         UIImage *pickImage = info[UIImagePickerControllerOriginalImage];
-        NSData *imageData = UIImagePNGRepresentation(pickImage);
-        CIImage *ciImage = [CIImage imageWithData:imageData];
+        CIImage *ciImage = [CIImage imageWithCGImage:[pickImage CGImage]];
         CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:@{CIDetectorAccuracy: CIDetectorAccuracyLow}];
         NSArray *feature = [detector featuresInImage:ciImage];
         
@@ -156,7 +155,7 @@
             if (imageInfo && imageInfo.length) {
                 [self scanSuccess:imageInfo];
             } else{
-                [self scanError:[NSError errorWithDomain:@"ImagePickerDomain" code:999 userInfo:@{NSLocalizedDescriptionKey: @"ImagePickerError"}]];
+                [self scanError:[NSError errorWithDomain:@"ImagePickerDomain" code:999 userInfo:@{NSLocalizedDescriptionKey: @"解析失败"}]];
             }
         });
     });
