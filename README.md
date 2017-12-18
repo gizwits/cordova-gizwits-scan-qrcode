@@ -6,9 +6,8 @@
 * iOS
 * android
 
-## 效果预览 （iOS & android）
-<img src="https://raw.githubusercontent.com/wiki/gizwits/cordova-gizwits-scan-qrcode/iOS_1.2.0_1.jpg" width=180/> <img src="https://raw.githubusercontent.com/wiki/gizwits/cordova-gizwits-scan-qrcode/iOS_1.2.0_2.jpg" width=180/> 
-<img src="https://raw.githubusercontent.com/wiki/gizwits/cordova-gizwits-scan-qrcode/android1.png" width=180/>
+## 效果预览
+<img src="https://raw.githubusercontent.com/wiki/gizwits/cordova-gizwits-scan-qrcode/iOS_1.2.0_1.jpg" width=180/> <img src="https://raw.githubusercontent.com/wiki/gizwits/cordova-gizwits-scan-qrcode/iOS_1.2.0_2.jpg" width=180/>
 
 ## 使用说明
 
@@ -23,7 +22,7 @@ cordova plugin add gizscanqrcode
 // 添加 gizscanqrcode插件(指定版本)
 cordova plugin add gizscanqrcode@版本号
 // 删除 gizscanqrcode插件
-cordova plugin rm com.gizscanqrcode
+cordova plugin rm gizscanqrcode
 ```
 
 > 2.插件使用
