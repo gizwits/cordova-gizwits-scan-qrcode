@@ -32,8 +32,8 @@ cordova plugin rm gizscanqrcode
  * 参数可传空，则全部为默认，定制哪项添加哪项即可。
  * 
  * callback:
-   {resultCode: Int,              //(0: unknown; 1: success; 2: error; 3: cancel)
-        result: String,           //( QR code(success); reason(error); cancel(cancel) )
+   {"resultCode": "Int",              //(0: unknown; 1: success; 2: error; 3: cancel)
+        "result": "String"            //( QR code(success); reason(error); cancel(cancel) )
    }
  */
 cordova.plugins.gizscanqrcode.scan(

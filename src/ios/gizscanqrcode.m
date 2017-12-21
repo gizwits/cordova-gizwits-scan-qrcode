@@ -33,7 +33,7 @@
 }
 
 - (void)configScanqrcodeCallbackWithCode:(GizscanqrcodeResult)resultCode result:(NSString *)result{
-    NSString *resultString = [NSString stringWithFormat:@"{resultCode: %@,result: %@}", @(resultCode), result];
+    NSString *resultString = [NSString stringWithFormat:@"{\"resultCode\": \"%@\",\"result\": \"%@\"}", @(resultCode), result];
     if (resultCode == GizscanqrcodeResultSuccess) {
         [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:resultString] callbackId:self.command.callbackId];
     } else{
