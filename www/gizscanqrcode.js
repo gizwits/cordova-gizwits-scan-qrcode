@@ -28,8 +28,8 @@ var exec = require('cordova/exec');
     }
 
  *callback:
-    {resultCode: Int,              //(0: unknown; 1: success; 2: error; 3: cancel)
-     result: String,               //( QR code(success); reason(error); cancel(cancel) )
+    {"resultCode": "Int",              //(0: unknown; 1: success; 2: error; 3: cancel)
+     "result": "String"                //( QR code(success); reason(error); cancel(cancel) )
     }
  */
 exports.scan = function (arg0, success, error) {
