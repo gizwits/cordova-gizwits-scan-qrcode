@@ -75,10 +75,14 @@ public class gizscanqrcode extends CordovaPlugin {
                                 value = obj.get(key);
 
                                 //if (value instanceof Integer) {
-                                   // intentScan.putExtra(key, (Integer) value);
-                                //} else if (value instanceof String) {
-                                    intentScan.putExtra(key, (String) value);
-                               // }
+                                //    intentScan.putExtra(key, (Integer) value);
+                                //}else if (value instanceof Float) {
+                                //    intentScan.putExtra(key, (Float) value);
+								//}else if (value instanceof Boolean) {
+                                //    intentScan.putExtra(key, (Boolean) value);
+								//}else {
+									intentScan.putExtra(key, (String) value);
+								//}
 
                             } catch (JSONException e) {
                                 Log.i("CordovaLog", e.getLocalizedMessage());
