@@ -12,7 +12,7 @@
 @property(nonatomic, strong)UIColor *borderColor;           //(扫描框颜色)
 @property(nonatomic, assign)CGFloat borderScale;            //(边框大小，0.1 ~ 1)
 //choose photo button
-@property(nonatomic, assign)BOOL choosePhotoEnable;        //(支持相册选取)
+@property(nonatomic, strong)NSNumber *choosePhotoEnable;        //(支持相册选取)
 @property(nonatomic, copy)NSString *choosePhotoBtnTitle;    //(选取按钮文字)
 @property(nonatomic, strong)UIColor *choosePhotoBtnColor;   //(选取按钮颜色)
 //colors

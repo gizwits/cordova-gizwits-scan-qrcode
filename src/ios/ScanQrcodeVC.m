@@ -87,7 +87,7 @@
         }
     }
     //choosePhotoBtn
-    [self.choosePhotoBtn setHidden:!attr.choosePhotoEnable];
+    [self.choosePhotoBtn setHidden:![attr.choosePhotoEnable boolValue]];
     self.choosePhotoBtn.backgroundColor = attr.choosePhotoBtnColor;
     [self.choosePhotoBtn setTitle:attr.choosePhotoBtnTitle forState:UIControlStateNormal];
 }

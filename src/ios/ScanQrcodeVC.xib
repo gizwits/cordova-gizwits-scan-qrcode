@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="17B1003" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -93,7 +94,7 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请扫描设备二维码" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lsf-O3-KmJ">
-                            <rect key="frame" x="122" y="383.5" width="131" height="19.5"/>
+                            <rect key="frame" x="122.5" y="383.5" width="131" height="19.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -120,10 +121,12 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="9bX-go-Vbv" firstAttribute="leading" secondItem="Xzl-K3-Xen" secondAttribute="leading" constant="32" id="1dT-Da-Dfv"/>
+                        <constraint firstItem="2TH-Vh-DZj" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Xzl-K3-Xen" secondAttribute="top" constant="12" id="4Iy-XJ-17c"/>
                         <constraint firstItem="9bX-go-Vbv" firstAttribute="top" secondItem="lsf-O3-KmJ" secondAttribute="bottom" constant="24" id="D64-0c-CpH"/>
                         <constraint firstItem="9bX-go-Vbv" firstAttribute="centerX" secondItem="Xzl-K3-Xen" secondAttribute="centerX" id="Tbc-AA-t9I"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="9bX-go-Vbv" secondAttribute="bottom" constant="12" id="Zf4-xZ-bht"/>
                         <constraint firstItem="lsf-O3-KmJ" firstAttribute="top" secondItem="2TH-Vh-DZj" secondAttribute="bottom" constant="30" id="d5S-Gm-Rd1"/>
-                        <constraint firstItem="2TH-Vh-DZj" firstAttribute="centerY" secondItem="Xzl-K3-Xen" secondAttribute="centerY" multiplier="0.8" id="h67-vs-9Zj"/>
+                        <constraint firstItem="2TH-Vh-DZj" firstAttribute="centerY" secondItem="Xzl-K3-Xen" secondAttribute="centerY" multiplier="0.8" priority="750" id="h67-vs-9Zj"/>
                         <constraint firstItem="lsf-O3-KmJ" firstAttribute="centerX" secondItem="Xzl-K3-Xen" secondAttribute="centerX" id="pBY-kG-0kh"/>
                         <constraint firstItem="2TH-Vh-DZj" firstAttribute="centerX" secondItem="Xzl-K3-Xen" secondAttribute="centerX" id="s0F-6Q-mZv"/>
                         <constraint firstItem="2TH-Vh-DZj" firstAttribute="width" secondItem="Xzl-K3-Xen" secondAttribute="width" multiplier="0.6" identifier="borderScaleConstraint" id="wfM-Qq-bDM"/>
