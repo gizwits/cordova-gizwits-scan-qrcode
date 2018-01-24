@@ -32,7 +32,7 @@
     self.describeFontSize = 16;
     self.describeLineSpacing = 12;
     self.borderScale = 0.6;
-    self.choosePhotoEnable = false;
+    self.choosePhotoEnable = @(0);
     self.choosePhotoBtnTitle = @"从相册选择";
 }
 
@@ -65,7 +65,7 @@
             value = [value stringObject];
         }
     }
-    //color
+    //colorzz
     if ([key isEqualToString:@"barColor"] || [key isEqualToString:@"borderColor"] || [key isEqualToString:@"choosePhotoBtnColor"] || [key isEqualToString:@"describeColor"] || [key isEqualToString:@"baseColor"]) {
         value = [self colorWithHexString:value alpha:1];
     }
