@@ -33,13 +33,15 @@
 }
 
 - (void)configScanqrcodeCallbackWithCode:(GizscanqrcodeResult)resultCode result:(NSString *)result{
-    NSString *resultString = [NSString stringWithFormat:@"{\"resultCode\": \"%@\",\"result\": \"%@\"}", @(resultCode), result];
+    NSDictionary *resultDict = @{@"resultCode": @(resultCode),
+                                 @"result": result};
+    NSData *resultData = [NSJSONSerialization dataWithJSONObject:resultDict options:0 error:nil];
+    NSString *resultString = [[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
     if (resultCode == GizscanqrcodeResultSuccess) {
         [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:resultString] callbackId:self.command.callbackId];
     } else{
         [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:resultString] callbackId:self.command.callbackId];
     }
-    
 }
 
 @end

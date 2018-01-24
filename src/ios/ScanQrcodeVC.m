@@ -1,6 +1,7 @@
 #import "ScanQrcodeVC.h"
 #import "GizScanQrcodeView.h"
 #import "GizScanQrcodeAttr.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface ScanQrcodeVC ()<GizScanQrcodeViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -10,6 +11,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIView *topBarView;
 @property (weak, nonatomic) IBOutlet UIButton *choosePhotoBtn;
+@property (weak, nonatomic) IBOutlet UIButton *flashLight;
 //loading animation
 @property (weak, nonatomic) IBOutlet UIView *activityIndicatorBackView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingView;
@@ -34,11 +36,21 @@
             [self.scanView startScan];
         }
     }
+    if (!self.flashLight.hidden) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.scanView stopScan];
+    if (!self.flashLight.hidden) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    }
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle{
@@ -90,6 +102,17 @@
     [self.choosePhotoBtn setHidden:![attr.choosePhotoEnable boolValue]];
     self.choosePhotoBtn.backgroundColor = attr.choosePhotoBtnColor;
     [self.choosePhotoBtn setTitle:attr.choosePhotoBtnTitle forState:UIControlStateNormal];
+    //flashlight
+    [self.flashLight setHidden:![attr.flashlightEnable boolValue]];
+    if ([attr.flashlightEnable boolValue]) {
+        UIImage *selectedImg = [UIImage imageNamed:@"flashlight_open"];
+        UIImage *defaultImg = [UIImage imageNamed:@"flashlight_close"];
+        selectedImg = [selectedImg imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        defaultImg = [defaultImg imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [self.flashLight setTintColor:attr.borderColor];
+        [self.flashLight setImage:selectedImg forState:UIControlStateSelected];
+        [self.flashLight setImage:defaultImg forState:UIControlStateNormal];
+    }
 }
 
 #pragma mark - loading animation
@@ -122,6 +145,42 @@
     self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     self.imagePicker.delegate = self;
     [self presentViewController:self.imagePicker animated:YES completion:nil];
+}
+
+- (IBAction)flashLightAction:(id)sender {
+    if ([sender isKindOfClass:[UIButton class]]) {
+        UIButton *button = (UIButton *)sender;
+        [self turnTheFlashlightOn:!button.selected];
+    }
+}
+
+#pragma mark - flashlight
+- (void)turnTheFlashlightOn:(BOOL)on{
+    self.flashLight.selected = on;
+    Class captureDeviceClass = NSClassFromString(@"AVCaptureDevice");
+    if (captureDeviceClass != nil) {
+        AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        if ([device hasTorch] && [device hasFlash]){
+            [device lockForConfiguration:nil];
+            if (on) {
+                [device setTorchMode:AVCaptureTorchModeOn];
+                [device setFlashMode:AVCaptureFlashModeOn];
+            } else {
+                [device setTorchMode:AVCaptureTorchModeOff];
+                [device setFlashMode:AVCaptureFlashModeOff];
+            }
+            [device unlockForConfiguration];
+        }else{
+            NSLog(@"初始化失败");
+        }
+    }else{
+        NSLog(@"没有闪光设备");
+    }
+}
+
+#pragma mark - notifications
+- (void)applicationDidBecomeActive:(NSNotification *)notification{
+    [self turnTheFlashlightOn: self.flashLight.selected];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -180,10 +239,6 @@
         self.scancodeCallback(GizscanqrcodeResultError, errorString);
     }
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
 }
 
 @end

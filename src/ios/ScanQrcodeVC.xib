@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="17C88" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,6 +15,7 @@
                 <outlet property="activityIndicatorBackView" destination="SOm-fC-rH2" id="Njb-qe-cUt"/>
                 <outlet property="choosePhotoBtn" destination="9bX-go-Vbv" id="Wap-cU-Jp4"/>
                 <outlet property="descriptionLabel" destination="lsf-O3-KmJ" id="Im6-Mf-2eD"/>
+                <outlet property="flashLight" destination="0mV-6c-o4I" id="63U-y1-ihP"/>
                 <outlet property="loadingView" destination="Iuh-OE-q44" id="Vf3-0r-GVH"/>
                 <outlet property="scanImageView" destination="2TH-Vh-DZj" id="2rK-hB-zen"/>
                 <outlet property="scanView" destination="Xzl-K3-Xen" id="UGQ-7i-Kck"/>
@@ -93,6 +93,19 @@
                                 <constraint firstAttribute="width" secondItem="2TH-Vh-DZj" secondAttribute="height" id="I7E-Db-o6L"/>
                             </constraints>
                         </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0mV-6c-o4I" userLabel="flashlight">
+                            <rect key="frame" x="167.5" y="313.5" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="0mV-6c-o4I" secondAttribute="height" multiplier="1:1" id="iSw-Nf-3pU"/>
+                                <constraint firstAttribute="width" constant="40" id="xKP-AI-T3G"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                            <state key="normal" image="flashlight_close.png"/>
+                            <state key="selected" image="flashlight_open.png"/>
+                            <connections>
+                                <action selector="flashLightAction:" destination="-1" eventType="touchUpInside" id="NCo-zF-Z3S"/>
+                            </connections>
+                        </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请扫描设备二维码" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lsf-O3-KmJ">
                             <rect key="frame" x="122.5" y="383.5" width="131" height="19.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -123,6 +136,8 @@
                         <constraint firstItem="9bX-go-Vbv" firstAttribute="leading" secondItem="Xzl-K3-Xen" secondAttribute="leading" constant="32" id="1dT-Da-Dfv"/>
                         <constraint firstItem="2TH-Vh-DZj" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Xzl-K3-Xen" secondAttribute="top" constant="12" id="4Iy-XJ-17c"/>
                         <constraint firstItem="9bX-go-Vbv" firstAttribute="top" secondItem="lsf-O3-KmJ" secondAttribute="bottom" constant="24" id="D64-0c-CpH"/>
+                        <constraint firstItem="0mV-6c-o4I" firstAttribute="centerX" secondItem="2TH-Vh-DZj" secondAttribute="centerX" id="DDY-ty-HFC"/>
+                        <constraint firstItem="0mV-6c-o4I" firstAttribute="bottom" secondItem="2TH-Vh-DZj" secondAttribute="bottom" id="G23-1b-PeU"/>
                         <constraint firstItem="9bX-go-Vbv" firstAttribute="centerX" secondItem="Xzl-K3-Xen" secondAttribute="centerX" id="Tbc-AA-t9I"/>
                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="9bX-go-Vbv" secondAttribute="bottom" constant="12" id="Zf4-xZ-bht"/>
                         <constraint firstItem="lsf-O3-KmJ" firstAttribute="top" secondItem="2TH-Vh-DZj" secondAttribute="bottom" constant="30" id="d5S-Gm-Rd1"/>
@@ -168,6 +183,8 @@
     </objects>
     <resources>
         <image name="bar_back.png" width="66" height="66"/>
+        <image name="flashlight_close.png" width="128" height="128"/>
+        <image name="flashlight_open.png" width="128" height="128"/>
         <image name="scan_window" width="16" height="16"/>
     </resources>
 </document>

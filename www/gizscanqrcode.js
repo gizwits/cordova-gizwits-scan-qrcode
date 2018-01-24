@@ -24,7 +24,10 @@ var exec = require('cordova/exec');
      //choose photo button
      "choosePhotoEnable": "true",       //(支持相册选取, 默认false)
      "choosePhotoBtnTitle": "相册",      //(选取按钮文字)
-     "choosePhotoBtnColor": "4e8dec"    //(选取按钮颜色)
+     "choosePhotoBtnColor": "4e8dec",   //(选取按钮颜色)
+
+     //flashlight
+     "flashlightEnable": "true"         //(支持手电筒, 默认false)
     }
 
  *callback:
