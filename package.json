@@ -21,7 +21,8 @@
     "cordova gizwits",
     "cordova scan qrcode",
     "cordova qrcode",
-    "cordova code"
+    "cordova code",
+    "qcode"
   ],
   "scripts": {
     "precommit": "npm run gen-docs && git add README.md",
