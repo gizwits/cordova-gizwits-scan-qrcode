@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="17C88" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,17 +32,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xe1-U0-5IH">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                    <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gUB-c0-YJp" userLabel="stateBar">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="20" id="nsj-Zm-IgN"/>
-                            </constraints>
-                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="58J-Cg-v3a" userLabel="Nav">
-                            <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="扫描二维码" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tcr-js-iQh">
                                     <rect key="frame" x="144.5" y="12" width="87" height="20.5"/>
@@ -75,11 +70,8 @@
                     </subviews>
                     <color key="backgroundColor" red="0.30588235294117649" green="0.55294117647058827" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstItem="gUB-c0-YJp" firstAttribute="top" secondItem="Xe1-U0-5IH" secondAttribute="top" id="Hrz-MH-WUE"/>
-                        <constraint firstItem="gUB-c0-YJp" firstAttribute="leading" secondItem="Xe1-U0-5IH" secondAttribute="leading" id="Ira-mN-e6b"/>
-                        <constraint firstItem="gUB-c0-YJp" firstAttribute="bottom" secondItem="58J-Cg-v3a" secondAttribute="top" id="Mvw-8I-XbP"/>
+                        <constraint firstItem="58J-Cg-v3a" firstAttribute="top" secondItem="Xe1-U0-5IH" secondAttribute="top" id="D7U-VP-aXG"/>
                         <constraint firstItem="58J-Cg-v3a" firstAttribute="leading" secondItem="Xe1-U0-5IH" secondAttribute="leading" id="Qlr-Ji-oN1"/>
-                        <constraint firstAttribute="trailing" secondItem="gUB-c0-YJp" secondAttribute="trailing" id="Xha-jf-LIg"/>
                         <constraint firstAttribute="trailing" secondItem="58J-Cg-v3a" secondAttribute="trailing" id="YKx-DP-ynA"/>
                         <constraint firstAttribute="bottom" secondItem="58J-Cg-v3a" secondAttribute="bottom" id="gGx-bO-WE2"/>
                     </constraints>
@@ -168,6 +160,7 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="SOm-fC-rH2" secondAttribute="bottom" id="2ld-UK-baj"/>
                 <constraint firstItem="SOm-fC-rH2" firstAttribute="top" secondItem="Xe1-U0-5IH" secondAttribute="bottom" id="91E-Zh-sTk"/>
+                <constraint firstItem="Xe1-U0-5IH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="topMargin" id="B3w-H2-BMN"/>
                 <constraint firstItem="Xe1-U0-5IH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GUi-L4-vuq"/>
                 <constraint firstItem="SOm-fC-rH2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="KbH-CP-71g"/>
                 <constraint firstAttribute="trailing" secondItem="Xzl-K3-Xen" secondAttribute="trailing" id="QHc-Jf-Ky8"/>
@@ -175,7 +168,6 @@
                 <constraint firstItem="Xzl-K3-Xen" firstAttribute="top" secondItem="Xe1-U0-5IH" secondAttribute="bottom" id="cWo-dh-Pd9"/>
                 <constraint firstAttribute="bottom" secondItem="Xzl-K3-Xen" secondAttribute="bottom" id="ciP-3s-ixf"/>
                 <constraint firstAttribute="trailing" secondItem="SOm-fC-rH2" secondAttribute="trailing" id="jiZ-Q5-1CT"/>
-                <constraint firstItem="Xe1-U0-5IH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="s3f-UZ-WKw"/>
                 <constraint firstAttribute="trailing" secondItem="Xe1-U0-5IH" secondAttribute="trailing" id="wgS-fa-AvP"/>
             </constraints>
             <point key="canvasLocation" x="53" y="16"/>

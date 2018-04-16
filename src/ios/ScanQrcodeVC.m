@@ -113,6 +113,8 @@
         [self.flashLight setImage:selectedImg forState:UIControlStateSelected];
         [self.flashLight setImage:defaultImg forState:UIControlStateNormal];
     }
+    //status bar
+    self.view.backgroundColor = attr.barColor;
 }
 
 #pragma mark - loading animation
