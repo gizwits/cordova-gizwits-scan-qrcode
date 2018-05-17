@@ -85,7 +85,7 @@
     tip.font = [UIFont systemFontOfSize:15];
     tip.textAlignment = NSTextAlignmentCenter;
     tip.textColor = [UIColor whiteColor];
-    tip.text = @"相机开启中";
+//    tip.text = @"相机开启中";
     tip.translatesAutoresizingMaskIntoConstraints = NO;
     [self.loadingView addSubview:tip];
     
