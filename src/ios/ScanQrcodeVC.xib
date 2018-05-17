@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,6 +18,7 @@
                 <outlet property="descriptionLabel" destination="lsf-O3-KmJ" id="Im6-Mf-2eD"/>
                 <outlet property="flashLight" destination="0mV-6c-o4I" id="63U-y1-ihP"/>
                 <outlet property="loadingView" destination="Iuh-OE-q44" id="Vf3-0r-GVH"/>
+                <outlet property="navBarTopCons" destination="t41-tc-uKb" id="rz0-zT-22X"/>
                 <outlet property="scanImageView" destination="2TH-Vh-DZj" id="2rK-hB-zen"/>
                 <outlet property="scanView" destination="Xzl-K3-Xen" id="UGQ-7i-Kck"/>
                 <outlet property="titleLabel" destination="Tcr-js-iQh" id="sLz-Zb-Cid"/>
@@ -32,7 +32,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xe1-U0-5IH">
-                    <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="58J-Cg-v3a" userLabel="Nav">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -77,16 +77,16 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xzl-K3-Xen" customClass="GizScanQrcodeView">
-                    <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                    <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" image="scan_window" translatesAutoresizingMaskIntoConstraints="NO" id="2TH-Vh-DZj">
-                            <rect key="frame" x="75" y="128.5" width="225" height="225"/>
+                            <rect key="frame" x="75" y="136.5" width="225" height="225"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="2TH-Vh-DZj" secondAttribute="height" id="I7E-Db-o6L"/>
                             </constraints>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0mV-6c-o4I" userLabel="flashlight">
-                            <rect key="frame" x="167.5" y="313.5" width="40" height="40"/>
+                            <rect key="frame" x="167.5" y="321.5" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="0mV-6c-o4I" secondAttribute="height" multiplier="1:1" id="iSw-Nf-3pU"/>
                                 <constraint firstAttribute="width" constant="40" id="xKP-AI-T3G"/>
@@ -99,13 +99,13 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请扫描设备二维码" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lsf-O3-KmJ">
-                            <rect key="frame" x="122.5" y="383.5" width="131" height="19.5"/>
+                            <rect key="frame" x="122.5" y="391.5" width="131" height="19.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9bX-go-Vbv">
-                            <rect key="frame" x="32" y="427" width="310" height="44"/>
+                            <rect key="frame" x="32" y="435" width="310" height="44"/>
                             <color key="backgroundColor" red="0.30588235294117649" green="0.55294117647058827" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="l3W-j1-HHT"/>
@@ -143,10 +143,10 @@
                     </connections>
                 </view>
                 <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SOm-fC-rH2">
-                    <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                    <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                     <subviews>
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Iuh-OE-q44">
-                            <rect key="frame" x="169" y="253" width="37" height="37"/>
+                            <rect key="frame" x="169" y="262" width="37" height="37"/>
                         </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -160,7 +160,6 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="SOm-fC-rH2" secondAttribute="bottom" id="2ld-UK-baj"/>
                 <constraint firstItem="SOm-fC-rH2" firstAttribute="top" secondItem="Xe1-U0-5IH" secondAttribute="bottom" id="91E-Zh-sTk"/>
-                <constraint firstItem="Xe1-U0-5IH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="topMargin" id="B3w-H2-BMN"/>
                 <constraint firstItem="Xe1-U0-5IH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GUi-L4-vuq"/>
                 <constraint firstItem="SOm-fC-rH2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="KbH-CP-71g"/>
                 <constraint firstAttribute="trailing" secondItem="Xzl-K3-Xen" secondAttribute="trailing" id="QHc-Jf-Ky8"/>
@@ -168,6 +167,7 @@
                 <constraint firstItem="Xzl-K3-Xen" firstAttribute="top" secondItem="Xe1-U0-5IH" secondAttribute="bottom" id="cWo-dh-Pd9"/>
                 <constraint firstAttribute="bottom" secondItem="Xzl-K3-Xen" secondAttribute="bottom" id="ciP-3s-ixf"/>
                 <constraint firstAttribute="trailing" secondItem="SOm-fC-rH2" secondAttribute="trailing" id="jiZ-Q5-1CT"/>
+                <constraint firstItem="Xe1-U0-5IH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="t41-tc-uKb"/>
                 <constraint firstAttribute="trailing" secondItem="Xe1-U0-5IH" secondAttribute="trailing" id="wgS-fa-AvP"/>
             </constraints>
             <point key="canvasLocation" x="53" y="16"/>

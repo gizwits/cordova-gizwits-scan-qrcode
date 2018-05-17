@@ -15,6 +15,7 @@
 //loading animation
 @property (weak, nonatomic) IBOutlet UIView *activityIndicatorBackView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *navBarTopCons;
 
 @property (nonatomic, strong) UIImagePickerController *imagePicker;
 
@@ -24,7 +25,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self setSubviews];
     [self configScanQRCodeView];
 }
@@ -70,6 +70,8 @@
 }
 
 - (void)setSubviews{
+    self.navBarTopCons.constant = [UIApplication sharedApplication].statusBarFrame.size.height;
+    
     [self setLoadingAnimation:false];
     
     GizScanQrcodeAttr *attr = [[GizScanQrcodeAttr alloc] initWithDict:self.scanQrcodeAttr];

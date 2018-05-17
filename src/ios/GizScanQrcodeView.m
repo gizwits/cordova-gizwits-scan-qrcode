@@ -10,13 +10,13 @@
 @property (nonatomic) CAShapeLayer *maskLayer;
 @property (weak, nonatomic) IBOutlet UIImageView *boundaryView;
 @property (nonatomic) UIImageView *scanLine;
+@property (nonatomic, strong) UIView *loadingView;
 
 @end
 
 @implementation GizScanQrcodeView
 
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
+- (instancetype)initWithCoder:(NSCoder *)coder{
     self = [super initWithCoder:coder];
     if (self) {
         [self setup];
@@ -35,16 +35,63 @@
 }
 
 - (void)setup {
-    if ([self setupCaptureSession]) {
+    [self setupCaptureSessionWithCompletedBlock:^(BOOL success) {
+        if (!success) {
+            return;
+        }
+        
         [self addPreviewLayer];
         [self addMaskLayer];
+        
+        [self sendSubviewToBack:self.captureView];
+        self.scanLine = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"scanLine"]];
+
+        [self setLoading];
+        
+        [self startScan];
         
         //增加监听
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(appWillEnterForegroundNotification)
                                                      name:UIApplicationWillEnterForegroundNotification
                                                    object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionDidStartRunning) name:AVCaptureSessionDidStartRunningNotification object:nil];
+    }];
+}
+
+- (void)sessionDidStartRunning{
+    if (self.loadingView) {
+        [self.loadingView removeFromSuperview];
     }
+}
+
+- (void)setLoading{
+    self.loadingView = [[UIView alloc] init];
+    [self addSubview:self.loadingView];
+    self.loadingView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.loadingView.backgroundColor = [UIColor blackColor];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[loadingView]-0-|" options:0 metrics:nil views:@{@"loadingView": self.loadingView}]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[loadingView]-0-|" options:0 metrics:nil views:@{@"loadingView": self.loadingView}]];
+    
+    UIActivityIndicatorView *loading = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [self.loadingView addSubview:loading];
+    [loading startAnimating];
+    loading.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.loadingView addConstraint:[NSLayoutConstraint constraintWithItem:loading attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.loadingView attribute:NSLayoutAttributeCenterY multiplier:1 constant:-60]];
+    [self.loadingView addConstraint:[NSLayoutConstraint constraintWithItem:loading attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.loadingView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    
+    UILabel *tip = [[UILabel alloc] init];
+    tip.font = [UIFont systemFontOfSize:15];
+    tip.textAlignment = NSTextAlignmentCenter;
+    tip.textColor = [UIColor whiteColor];
+    tip.text = @"相机开启中";
+    tip.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.loadingView addSubview:tip];
+    
+    [self.loadingView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[tip]-0-|" options:0 metrics:nil views:@{@"tip": tip}]];
+    [self.loadingView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[loading]-12-[tip]" options:0 metrics:nil views:@{@"loading": loading, @"tip": tip}]];
+    
 }
 
 - (void)appWillEnterForegroundNotification{
@@ -53,28 +100,27 @@
     }
 }
 
-- (BOOL)setupCaptureSession {
-    AVCaptureSession *session = [[AVCaptureSession alloc] init];
-    
-    AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    NSError *error = nil;
-    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
-    if (input) {
-        [session addInput:input];
-    }
-    else {
-        [self.delegate scanError:error];
-        return NO;
-    }
-    
-    AVCaptureMetadataOutput *output = [[AVCaptureMetadataOutput alloc] init];
-    [session addOutput:output];
-    output.metadataObjectTypes = @[AVMetadataObjectTypeQRCode];
-    [output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
-    self.output = output;
-    
-    self.session = session;
-    return YES;
+- (void)setupCaptureSessionWithCompletedBlock:(void(^)(BOOL))completed {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.session = [[AVCaptureSession alloc] init];
+        AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        NSError *error = nil;
+        
+        AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
+        if (!input) {
+            [self.delegate scanError:error];
+            completed(NO);
+            return;
+        }
+        [self.session addInput:input];
+        
+        AVCaptureMetadataOutput *output = [[AVCaptureMetadataOutput alloc] init];
+        [self.session addOutput:output];
+        output.metadataObjectTypes = @[AVMetadataObjectTypeQRCode];
+        [output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+        self.output = output;
+        completed(YES);
+    });
 }
 
 - (void)addPreviewLayer {
@@ -100,6 +146,9 @@
 }
 
 - (void)updateMaskLayer {
+    if (!self.session) {
+        return;
+    }
     CAShapeLayer *layer = [CAShapeLayer layer];
     UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.maskLayer.bounds];
     [path appendPath:[UIBezierPath bezierPathWithRect:self.boundaryView.frame]];
@@ -115,25 +164,32 @@
     [self.output setRectOfInterest:interestRect];
 }
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    [self sendSubviewToBack:self.captureView];
-    self.scanLine = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"scanLine"]];
-}
-
 - (void)startScan {
-    [self.session startRunning];
-    [self updateScanLine];
-    self.isScan = YES;
+    if (!self.session) {
+        return;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.session startRunning];
+        [self updateScanLine];
+        self.isScan = YES;
+    });
 }
 
 - (void)stopScan {
-    [self.session stopRunning];
-    self.isScan = NO;
-    [self updateScanLine];
+    if (!self.session) {
+        return;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.session stopRunning];
+        self.isScan = NO;
+        [self updateScanLine];
+    });
 }
 
 - (void)updateScanLine {
+    if (!self.session) {
+        return;
+    }
     if (self.session.isRunning) {
         if (!self.scanLine.superview) {
             [self.boundaryView addSubview:self.scanLine];
