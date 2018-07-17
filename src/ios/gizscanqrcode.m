@@ -1,5 +1,6 @@
 #import "gizscanqrcode.h"
 #import "ScanQrcodeVC.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface gizscanqrcode()
 
