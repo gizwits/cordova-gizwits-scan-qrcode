@@ -45,6 +45,7 @@
         
         [self sendSubviewToBack:self.captureView];
         self.scanLine = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"scanLine"]];
+        self.scanLine.image = [self.scanLine.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
         [self setLoading];
         
