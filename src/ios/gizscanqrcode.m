@@ -12,6 +12,11 @@
 - (void)scan:(CDVInvokedUrlCommand*)command{
     self.command = command;
     
+    if (![self checkCameraPermissions]){
+        [self configScanqrcodeCallbackWithCode:GizscanqrcodeResultNoPermission result:@"AVAuthorizationStatusDenied or AVAuthorizationStatusRestricted"];
+        return;
+    }
+    
     ScanQrcodeVC *scanVC = [[ScanQrcodeVC alloc] initWithNibName:@"ScanQrcodeVC" bundle:[NSBundle mainBundle]];
     // config scan code viewcontroller
     scanVC.scancodeCallback = ^(GizscanqrcodeResult resultCode, NSString *result){
@@ -41,6 +46,20 @@
         [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:resultString] callbackId:self.command.callbackId];
     } else{
         [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:resultString] callbackId:self.command.callbackId];
+    }
+}
+
+- (BOOL)checkCameraPermissions{
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){// 摄像头硬件是否好用
+        NSString * mediaType = AVMediaTypeVideo;
+        AVAuthorizationStatus  authorizationStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+        if (authorizationStatus == AVAuthorizationStatusRestricted|| authorizationStatus == AVAuthorizationStatusDenied) {// 用户是否允许摄像头使用
+            return NO;
+        }else {
+            return YES;
+        }
+    }else {
+        return NO;
     }
 }
 
