@@ -5,6 +5,7 @@ typedef NS_ENUM(NSInteger, GizscanqrcodeResult) {
     GizscanqrcodeResultSuccess,
     GizscanqrcodeResultError,
     GizscanqrcodeResultCancel,
+    GizscanqrcodeResultNoPermission,
 };
 
 @interface ScanQrcodeVC : UIViewController

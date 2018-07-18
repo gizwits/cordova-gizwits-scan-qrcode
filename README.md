@@ -11,16 +11,17 @@
 
 ## 使用说明
 
-> 1.添加插件
+> 1.添加/删除插件
 
 ```
-// 1.cordova目录
-cd <your cordova directory>
-// 2.添加 gizscanqrcode插件
+// 添加 gizscanqrcode 插件
 cordova plugin add gizscanqrcode
-// 
-// 添加 gizscanqrcode插件(指定版本)
+// 添加 gizscanqrcode 插件(指定版本)
 cordova plugin add gizscanqrcode@版本号
+// 添加插件，同时配置iOS平台相机以及相册访问权限提示语
+cordova plugin add gizscanqrcode --variable camera_usage_description=相机使用说明 --variable photo_library_usage_description=相册访问说明
+```
+```
 // 删除 gizscanqrcode插件
 cordova plugin rm gizscanqrcode
 ```
@@ -32,7 +33,7 @@ cordova plugin rm gizscanqrcode
  * 参数可传空，则全部为默认，定制哪项添加哪项即可。
  * 
  * callback:
-   {"resultCode": "Int",              //(0: unknown; 1: success; 2: error; 3: cancel)
+   {"resultCode": "Int",              //(0: unknown; 1: success; 2: error; 3: 用户取消扫描; 4: 摄像头不可用)
         "result": "String"            //( QR code(success); reason(error); cancel(cancel) )
    }
  */
@@ -58,7 +59,10 @@ cordova.plugins.gizscanqrcode.scan(
      //choose photo button
      "choosePhotoEnable": "true",       //(支持相册选取, 默认false)
      "choosePhotoBtnTitle": "相册",      //(选取按钮文字)
-     "choosePhotoBtnColor": "4e8dec"    //(选取按钮颜色)
+     "choosePhotoBtnColor": "4e8dec",   //(选取按钮颜色)
+
+     //flashlight
+     "flashlightEnable": "true"         //(支持手电筒, 默认false)
     },
     function (result) {
         console.log(result);//二维码数据
