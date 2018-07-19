@@ -107,13 +107,17 @@ public class gizscanqrcode extends CordovaPlugin {
           return;
       }
         if (requestCode == REQUEST_CODE ) {
-            if (resultCode == Activity.RESULT_OK && intent != null) {
-                String code = intent.getStringExtra("SCAN_RESULT");
-                //this.success(new PluginResult(PluginResult.Status.OK, obj), this.callback);
-                this.callbackContext.success(code);
-            } else {
-                this.callbackContext.error("");
-            }
+			if(intent != null){
+				String code = intent.getStringExtra("SCAN_RESULT");
+				if (resultCode == Activity.RESULT_OK) {
+					//this.success(new PluginResult(PluginResult.Status.OK, obj), this.callback);
+					this.callbackContext.success(code);
+				} else {
+					this.callbackContext.error(code);
+				}
+			}else{
+				this.callbackContext.error("");
+			}
         }
     }
 
