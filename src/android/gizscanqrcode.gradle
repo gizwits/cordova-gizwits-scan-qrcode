@@ -15,6 +15,8 @@ dependencies {
     compile 'com.android.support:support-v4:+'
     compile(name:'gizscanqrcode', ext:'aar')
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
+    compile 'com.google.zxing:core:3.3.0';
+    compile 'com.google.zxing:android-core:3.3.0';
 }
 
 android {
