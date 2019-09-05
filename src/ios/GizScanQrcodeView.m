@@ -117,7 +117,21 @@
         
         AVCaptureMetadataOutput *output = [[AVCaptureMetadataOutput alloc] init];
         [self.session addOutput:output];
-        output.metadataObjectTypes = @[AVMetadataObjectTypeQRCode];
+        //设置扫码支持的编码格式(如下设置条形码和二维码兼容)
+        NSMutableArray *types = [[NSMutableArray alloc] init];
+        if ([output.availableMetadataObjectTypes containsObject:AVMetadataObjectTypeQRCode]) {
+            [types addObject:AVMetadataObjectTypeQRCode];
+        }
+        if ([output.availableMetadataObjectTypes containsObject:AVMetadataObjectTypeEAN13Code]) {
+            [types addObject:AVMetadataObjectTypeEAN13Code];
+        }
+        if ([output.availableMetadataObjectTypes containsObject:AVMetadataObjectTypeEAN8Code]) {
+            [types addObject:AVMetadataObjectTypeEAN8Code];
+        }
+        if ([output.availableMetadataObjectTypes containsObject:AVMetadataObjectTypeCode128Code]) {
+            [types addObject:AVMetadataObjectTypeCode128Code];
+        }
+        output.metadataObjectTypes = types;
         [output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
         self.output = output;
         completed(YES);
