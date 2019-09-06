@@ -129,7 +129,22 @@
             [types addObject:AVMetadataObjectTypeEAN8Code];
         }
         if ([output.availableMetadataObjectTypes containsObject:AVMetadataObjectTypeCode128Code]) {
+            [types addObject:AVMetadataObjectTypeUPCECode];
+        }
+        if ([output.availableMetadataObjectTypes containsObject:AVMetadataObjectTypeCode128Code]) {
+            [types addObject:AVMetadataObjectTypeCode39Code];
+        }
+        if ([output.availableMetadataObjectTypes containsObject:AVMetadataObjectTypeCode128Code]) {
+            [types addObject:AVMetadataObjectTypeCode39Mod43Code];
+        }
+        if ([output.availableMetadataObjectTypes containsObject:AVMetadataObjectTypeCode128Code]) {
+            [types addObject:AVMetadataObjectTypeCode93Code];
+        }
+        if ([output.availableMetadataObjectTypes containsObject:AVMetadataObjectTypeCode128Code]) {
             [types addObject:AVMetadataObjectTypeCode128Code];
+        }
+        if ([output.availableMetadataObjectTypes containsObject:AVMetadataObjectTypeCode128Code]) {
+            [types addObject:AVMetadataObjectTypePDF417Code];
         }
         output.metadataObjectTypes = types;
         [output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
@@ -245,6 +260,13 @@
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
     AVMetadataMachineReadableCodeObject *metadataObj = [metadataObjects firstObject];
     if ([metadataObj.type isEqualToString:AVMetadataObjectTypeQRCode]) {
+        NSString *result = metadataObj.stringValue;
+        if (result) {
+            [self stopScan];
+            [self.delegate scanSuccess:result];
+        }
+    }
+    if ([metadataObj.type isEqualToString:AVMetadataObjectTypeEAN13Code] || [metadataObj.type isEqualToString:AVMetadataObjectTypeEAN8Code] || [metadataObj.type isEqualToString:AVMetadataObjectTypeUPCECode] || [metadataObj.type isEqualToString:AVMetadataObjectTypeCode39Code]|| [metadataObj.type isEqualToString:AVMetadataObjectTypeCode39Mod43Code] || [metadataObj.type isEqualToString:AVMetadataObjectTypeCode93Code] || [metadataObj.type isEqualToString:AVMetadataObjectTypeCode128Code] || [metadataObj.type isEqualToString:AVMetadataObjectTypePDF417Code]) {
         NSString *result = metadataObj.stringValue;
         if (result) {
             [self stopScan];
